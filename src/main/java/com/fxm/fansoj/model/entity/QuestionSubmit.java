@@ -4,9 +4,10 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Data;
+
 import java.io.Serializable;
 import java.util.Date;
-import lombok.Data;
 
 /**
  * 题目提交表
@@ -18,7 +19,7 @@ public class QuestionSubmit implements Serializable {
     /**
      * id
      */
-    @TableId(type = IdType.AUTO)
+    @TableId(type = IdType.ASSIGN_ID)
     private Long id;
 
     /**
@@ -34,7 +35,7 @@ public class QuestionSubmit implements Serializable {
     /**
      * 判题信息（json对象）
      */
-    private String judgeinfo;
+    private String judgeInfo;
 
     /**
      * 判题状态：0-待判题，1-判题中，2-成功，3-失败
@@ -44,42 +45,27 @@ public class QuestionSubmit implements Serializable {
     /**
      * 题目id
      */
-    private Long questionid;
+    private Long questionId;
 
     /**
      * 创建用户id
      */
-    private Long userid;
-
-    /**
-     * 题目答案
-     */
-    private String answer;
-
-    /**
-     * 提交数
-     */
-    private Integer submitnum;
-
-    /**
-     * 通过数
-     */
-    private Integer acceptnum;
+    private Long userId;
 
     /**
      * 创建时间
      */
-    private Date createtime;
+    private Date createTime;
 
     /**
      * 更新时间
      */
-    private Date updatetime;
+    private Date updateTime;
 
     /**
      * 是否删除
      */
-    private Integer isdelete;
+    private Integer isDelete;
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;

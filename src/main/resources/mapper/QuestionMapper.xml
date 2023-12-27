@@ -7,20 +7,26 @@
     <resultMap id="BaseResultMap" type="com.fxm.fansoj.model.entity.Question">
             <id property="id" column="id" jdbcType="BIGINT"/>
             <result property="title" column="title" jdbcType="VARCHAR"/>
+            <result property="content" column="content" jdbcType="VARCHAR"/>
             <result property="tags" column="tags" jdbcType="VARCHAR"/>
             <result property="answer" column="answer" jdbcType="VARCHAR"/>
-            <result property="submitnum" column="submitNum" jdbcType="INTEGER"/>
-            <result property="acceptnum" column="acceptNum" jdbcType="INTEGER"/>
-            <result property="userid" column="userId" jdbcType="BIGINT"/>
-            <result property="createtime" column="createTime" jdbcType="TIMESTAMP"/>
-            <result property="updatetime" column="updateTime" jdbcType="TIMESTAMP"/>
-            <result property="isdelete" column="isDelete" jdbcType="TINYINT"/>
+            <result property="submitNum" column="submitNum" jdbcType="INTEGER"/>
+            <result property="acceptNum" column="acceptNum" jdbcType="INTEGER"/>
+            <result property="judgeCase" column="judgeCase" jdbcType="VARCHAR"/>
+            <result property="judgeConfig" column="judgeConfig" jdbcType="VARCHAR"/>
+            <result property="thumbNum" column="thumbNum" jdbcType="INTEGER"/>
+            <result property="favourNum" column="favourNum" jdbcType="INTEGER"/>
+            <result property="userId" column="userId" jdbcType="BIGINT"/>
+            <result property="createTime" column="createTime" jdbcType="TIMESTAMP"/>
+            <result property="updateTime" column="updateTime" jdbcType="TIMESTAMP"/>
+            <result property="isDelete" column="isDelete" jdbcType="TINYINT"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,title,tags,
-        answer,submitNum,acceptNum,
-        userId,createTime,updateTime,
-        isDelete
+        id,title,content,
+        tags,answer,submitNum,
+        acceptNum,judgeCase,judgeConfig,
+        thumbNum,favourNum,userId,
+        createTime,updateTime,isDelete
     </sql>
 </mapper>

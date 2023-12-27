@@ -8,23 +8,20 @@
             <id property="id" column="id" jdbcType="BIGINT"/>
             <result property="language" column="language" jdbcType="VARCHAR"/>
             <result property="code" column="code" jdbcType="VARCHAR"/>
-            <result property="judgeinfo" column="judgeInfo" jdbcType="VARCHAR"/>
+            <result property="judgeInfo" column="judgeInfo" jdbcType="VARCHAR"/>
             <result property="status" column="status" jdbcType="INTEGER"/>
-            <result property="questionid" column="questionId" jdbcType="BIGINT"/>
-            <result property="userid" column="userId" jdbcType="BIGINT"/>
-            <result property="answer" column="answer" jdbcType="VARCHAR"/>
-            <result property="submitnum" column="submitNum" jdbcType="INTEGER"/>
-            <result property="acceptnum" column="acceptNum" jdbcType="INTEGER"/>
-            <result property="createtime" column="createTime" jdbcType="TIMESTAMP"/>
-            <result property="updatetime" column="updateTime" jdbcType="TIMESTAMP"/>
-            <result property="isdelete" column="isDelete" jdbcType="TINYINT"/>
+            <result property="questionId" column="questionId" jdbcType="BIGINT"/>
+            <result property="userId" column="userId" jdbcType="BIGINT"/>
+            <result property="code" column="code" jdbcType="VARCHAR"/>
+            <result property="createTime" column="createTime" jdbcType="TIMESTAMP"/>
+            <result property="updateTime" column="updateTime" jdbcType="TIMESTAMP"/>
+            <result property="isDelete" column="isDelete" jdbcType="TINYINT"/>
     </resultMap>
 
     <sql id="Base_Column_List">
         id,language,code,
         judgeInfo,status,questionId,
-        userId,answer,submitNum,
-        acceptNum,createTime,updateTime,
+        userId,createTime,updateTime,
         isDelete
     </sql>
 </mapper>
