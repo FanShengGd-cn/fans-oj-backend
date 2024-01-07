@@ -25,13 +25,13 @@ public class DefaultJudgeStrategyImpl implements JudgeStrategy {
         JudgeInfoMessageEnum judgeInfoMessageEnum = JudgeInfoMessageEnum.ACCEPTED;
         if (outputList.size() != inputList.size()) {
             judgeInfoMessageEnum = JudgeInfoMessageEnum.WRONG_ANSWER;
-            judgeInfoResp.setMessage(judgeInfoMessageEnum);
+            judgeInfoResp.setMessage(judgeInfoMessageEnum.getValue());
             return judgeInfoResp;
         }
         for (int i = 0; i < judgeCaseList.size(); i++) {
             if (!judgeCaseList.get(i).getOutput().equals(outputList.get(i))) {
                 judgeInfoMessageEnum = JudgeInfoMessageEnum.WRONG_ANSWER;
-                judgeInfoResp.setMessage(judgeInfoMessageEnum);
+                judgeInfoResp.setMessage(judgeInfoMessageEnum.getValue());
                 return judgeInfoResp;
             }
         }
@@ -43,17 +43,17 @@ public class DefaultJudgeStrategyImpl implements JudgeStrategy {
         Long memoryLimit = judgeConfigBean.getMemoryLimit();
         if (memory > memoryLimit) {
             judgeInfoMessageEnum = JudgeInfoMessageEnum.MEMORY_LIMIT_EXCEEDED;
-            judgeInfoResp.setMessage(judgeInfoMessageEnum);
+            judgeInfoResp.setMessage(judgeInfoMessageEnum.getValue());
             return judgeInfoResp;
         }
         if (time > timeLimit) {
             judgeInfoMessageEnum = JudgeInfoMessageEnum.TIME_LIMIT_EXCEEDED;
-            judgeInfoResp.setMessage(judgeInfoMessageEnum);
+            judgeInfoResp.setMessage(judgeInfoMessageEnum.getValue());
             return judgeInfoResp;
         }
 
 
-        judgeInfoResp.setMessage(judgeInfoMessageEnum);
+        judgeInfoResp.setMessage(judgeInfoMessageEnum.getValue());
         judgeInfoResp.setMemory(memory);
         judgeInfoResp.setTime(time);
 

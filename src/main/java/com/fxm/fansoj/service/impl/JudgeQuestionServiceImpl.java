@@ -57,12 +57,19 @@ public class JudgeQuestionServiceImpl implements JudgeQuestionService {
             throw new BusinessException(ErrorCode.OPERATION_ERROR, "正在判题中");
         }
         Question question = questionService.lambdaQuery()
-                .select(Question::getJudgeCase, Question::getJudgeConfig)
                 .eq(Question::getId, questionId).one();
         if (question == null) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "问题不存在");
         }
-        // 更改题目状态
+        // 题目提交数加一
+        Question questionUpdate = new Question();
+        questionUpdate.setId(questionId);
+        questionUpdate.setSubmitNum(question.getSubmitNum()+1);
+        boolean questionUpdateFir = questionService.updateById(questionUpdate);
+        if(!questionUpdateFir){
+            throw new BusinessException(ErrorCode.OPERATION_ERROR, "题目状态更新失败");
+        }
+        // 更改题目提交状态
         QuestionSubmit questionSubmitUpdate = new QuestionSubmit();
         questionSubmitUpdate.setId(id);
         questionSubmitUpdate.setStatus(QuestionSubmitStatusEnum.RUNNING.getValue());
@@ -89,6 +96,7 @@ public class JudgeQuestionServiceImpl implements JudgeQuestionService {
         judgeContext.setInputList(inputList);
         judgeContext.setOutputList(executeQuestionResponse.getOutputList());
         judgeContext.setQuestion(question);
+        judgeContext.setQuestionSubmit(questionSubmit);
         judgeContext.setJudgeCaseList(judgeCaseList);
 
         JudgeInfo judgeInfoRes = judgeStrategyManager.doJudge(judgeContext);

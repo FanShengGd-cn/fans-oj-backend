@@ -1,6 +1,5 @@
 package com.fxm.fansoj.model.dto.questionSubmit;
 
-import com.fxm.fansoj.model.enums.JudgeInfoMessageEnum;
 import lombok.Data;
 
 /**
@@ -11,7 +10,7 @@ public class JudgeInfo {
     /**
      * 程序执行信息
      */
-    private JudgeInfoMessageEnum message;
+    private String message;
     /**
      * 内存占用
      */

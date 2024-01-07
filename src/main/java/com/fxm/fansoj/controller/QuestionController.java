@@ -11,10 +11,16 @@ import com.fxm.fansoj.constant.UserConstant;
 import com.fxm.fansoj.exception.BusinessException;
 import com.fxm.fansoj.exception.ThrowUtils;
 import com.fxm.fansoj.model.dto.question.*;
+import com.fxm.fansoj.model.dto.questionSubmit.QuestionSubmitAddRequest;
+import com.fxm.fansoj.model.dto.questionSubmit.QuestionSubmitQueryRequest;
 import com.fxm.fansoj.model.entity.Question;
+import com.fxm.fansoj.model.entity.QuestionSubmit;
 import com.fxm.fansoj.model.entity.User;
+import com.fxm.fansoj.model.vo.QuestionSubmitVO;
 import com.fxm.fansoj.model.vo.QuestionVO;
+import com.fxm.fansoj.service.JudgeQuestionService;
 import com.fxm.fansoj.service.QuestionService;
+import com.fxm.fansoj.service.QuestionSubmitService;
 import com.fxm.fansoj.service.UserService;
 import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
@@ -37,6 +43,12 @@ public class QuestionController {
 
     @Resource
     private QuestionService QuestionService;
+
+    @Resource
+    private QuestionSubmitService questionSubmitService;
+
+    @Resource
+    private JudgeQuestionService judgeQuestionService;
 
     @Resource
     private UserService userService;
@@ -246,6 +258,36 @@ public class QuestionController {
         Page<Question> QuestionPage = QuestionService.page(new Page<>(current, size),
                 QuestionService.getQueryWrapper(QuestionQueryRequest));
         return ResultUtils.success(QuestionService.getQuestionVOPage(QuestionPage, request));
+    }
+
+    @PostMapping("/question_submit/judge")
+    public BaseResponse<QuestionSubmit> doQuestionSubmit(@RequestBody QuestionSubmitAddRequest questionSubmitAddRequest, HttpServletRequest request) {
+        if (questionSubmitAddRequest == null || questionSubmitAddRequest.getQuestionId() <= 0) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+        }
+        final User loginUser = userService.getLoginUser(request);
+        long addResult = questionSubmitService.doQuestionSubmit(questionSubmitAddRequest, loginUser);
+        QuestionSubmit questionSubmit = judgeQuestionService.doJudge(addResult);
+        return ResultUtils.success(questionSubmit);
+    }
+
+    /**
+     *
+     * @param questionSubmitQueryRequest
+     * @param request
+     * @return
+     */
+    @PostMapping("/question_submit/list/page")
+    public BaseResponse<Page<QuestionSubmitVO>> listQuestionSubmitByPage(@RequestBody QuestionSubmitQueryRequest questionSubmitQueryRequest,
+                                                                   HttpServletRequest request) {
+        long current = questionSubmitQueryRequest.getCurrent();
+        long size = questionSubmitQueryRequest.getPageSize();
+
+        // 限制爬虫
+        Page<QuestionSubmit> QuestionPage = questionSubmitService.page(new Page<>(current, size),
+                questionSubmitService.getQueryWrapper(questionSubmitQueryRequest));
+        final User loginUser = userService.getLoginUser(request);
+        return ResultUtils.success(questionSubmitService.getQuestionSubmitVOPage(QuestionPage, loginUser));
     }
 
 }
